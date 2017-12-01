@@ -27,7 +27,7 @@ yarn add named-urls
 Create file with all routes in your application (e.g. `routes.js`). Use
 `named-urls/include` to create namespaced group of routes with common prefix:
 
-```
+```jsx
 // routes.js
 import { include } from 'named-urls'
 
