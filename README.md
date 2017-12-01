@@ -15,8 +15,8 @@ Simple named url patterns in Javascript
 [![Star on GitHub][Badge-Stars]][Star]
 [![Tweet][Badge-Twitter]][Twitter]
 
-> Implementing a static route config and named routes on top of this project at this point is like a 20 line ordeal. 
---- [Ryan Florence](https://github.com/ReactTraining/react-router/issues/1840#issuecomment-284972773)
+> Implementing a static route config and named routes on top of (react-router) at this point is like a 20 line ordeal.
+– [Ryan Florence](https://github.com/ReactTraining/react-router/issues/1840#issuecomment-284972773)
 
 ## Motivation
 
