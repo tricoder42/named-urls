@@ -30,7 +30,7 @@ jobs:
       # run tests!
       - run: yarn test
 
-      - run: codecov
+      - run: ./node_modules/.bin/codecov
 
       - run: yarn semantic-release
 
