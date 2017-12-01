@@ -6,7 +6,6 @@ Simple named url patterns in Javascript
 
 <hr />
 
-[![Join the chat at https://gitter.im/tricoder42/named-urls](https://badges.gitter.im/tricoder42/named-urls.svg)](https://gitter.im/tricoder42/named-urls?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![CircleCI][Badge-CI]][CI]
 [![Code Coverage][Badge-Coverage]][Coverage]
 [![PRs Welcome][Badge-PRWelcome]][PRWelcome]
