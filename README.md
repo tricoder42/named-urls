@@ -16,6 +16,25 @@ Simple named url patterns in Javascript
 [![Star on GitHub][Badge-Stars]][Star]
 [![Tweet][Badge-Twitter]][Twitter]
 
+> Implementing a static route config and named routes on top of this project at this point is like a 20 line ordeal. 
+--- [Ryan Florence](https://github.com/ReactTraining/react-router/issues/1840#issuecomment-284972773)
+
+## Motivation
+
+Named routes are essential to keep route config DRY and prevent silly errors
+due to typos. This feature was removed from `react-router` in 1.0 and I missed
+it since then as [many](https://github.com/ReactTraining/react-router/issues/5160)
+[others](https://github.com/ReactTraining/react-router/issues/1840).
+
+There're other libs dealing with named routes, some of them provide custom
+`Link`, `Route` routes, some of them have more features to integrate with
+`express`. Here's incomplete list of libs I considered before writing these
+20 lines of code (and 200+ lines of other files to publish this package):
+
+- https://github.com/adamziel/react-router-named-routes
+- https://github.com/taion/use-named-routes
+- https://github.com/alubbe/named-routes
+
 ## Installation
 
 ```
