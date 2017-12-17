@@ -3,7 +3,7 @@ export function include(base, routes) {
 
   Object.keys(routes).forEach(route => {
     const url = routes[route]
-    mappedRoutes[route] = url.startsWith("/")
+    mappedRoutes[route] = url.indexOf("/") === 0
       ? url
       : [base, url].join("/").replace("//", "/")
   })
