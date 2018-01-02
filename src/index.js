@@ -3,9 +3,15 @@ export function include(base, routes) {
 
   Object.keys(routes).forEach(route => {
     const url = routes[route]
-    mappedRoutes[route] = url.indexOf("/") === 0
-      ? url
-      : [base, url].join("/").replace("//", "/")
+
+    if (typeof url === "object") {
+      // nested include - prefix all sub-routes with base
+      mappedRoutes[route] = include(base, url)
+    } else {
+      // route - prefix with base and replace duplicate //
+      mappedRoutes[route] =
+        url.indexOf("/") === 0 ? url : [base, url].join("/").replace("//", "/")
+    }
   })
 
   return mappedRoutes

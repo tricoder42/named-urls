@@ -25,6 +25,24 @@ describe("include", function() {
     })
   })
 
+  it("should work with nested prefixes", function() {
+    expect(
+      include("/base/", {
+        first: "first/",
+        second: include("second", {
+          third: "third/",
+          fourth: "fourth/"
+        })
+      })
+    ).toEqual({
+      first: "/base/first/",
+      second: {
+        third: "/base/second/third/",
+        fourth: "/base/second/fourth/"
+      }
+    })
+  })
+
   it("should add missing slash to base", function() {
     expect(
       include("/base", {

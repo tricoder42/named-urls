@@ -66,10 +66,14 @@ export default {
    // Routes with params
    messages: include('/messages', {
       all: '',
+      unread: 'unread/'
       
-      detail: ':messageId/',
-      edit: ':messageId/edit/',
-      comments: ':messageId/comments/',
+      // nesting of includes is allowed
+      detail: include(':messageId/', {
+         show: '',
+         edit: 'edit/',
+         comments: 'comments/',
+      })
    })
 }
 ```
@@ -91,7 +95,8 @@ function App() {
          <Route path={routes.profile} component={scenes.Profile />
          <Route path={routes.auth.login} component={scenes.auth.Login />
          // ...
-         <Route path={routes.messages.detail} component={scenes.messages.Detail />
+         <Route path={routes.messages.unread} component={scenes.messages.Unread />
+         <Route path={routes.messages.detail.show} component={scenes.messages.Detail />
       </Switch>
    )
 }
@@ -113,7 +118,7 @@ function Navigation({ messages }) {
          // Use reverse to replace params in route pattern with values
          {messages.map(message => 
             <li key={message.id}>
-               <Link to={reverse(routes.messages.detail, { messageId: message.id })}>
+               <Link to={reverse(routes.messages.detail.show, { messageId: message.id })}>
                   Profile
                </Link>
             </li>
