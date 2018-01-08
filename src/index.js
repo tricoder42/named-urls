@@ -1,10 +1,18 @@
 export function include(base, routes) {
-  const mappedRoutes = {}
+  const mappedRoutes = {
+    toString() {
+      return base
+    }
+  }
 
   Object.keys(routes).forEach(route => {
     const url = routes[route]
 
-    if (typeof url === "object") {
+    if (typeof url === "function" && route === "toString") {
+      mappedRoutes.toString = function() {
+        return base + routes.toString()
+      }
+    } else if (typeof url === "object") {
       // nested include - prefix all sub-routes with base
       mappedRoutes[route] = include(base, url)
     } else {

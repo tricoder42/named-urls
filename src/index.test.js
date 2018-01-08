@@ -19,10 +19,12 @@ describe("include", function() {
         first: "first/",
         second: "second/"
       })
-    ).toEqual({
-      first: "/base/first/",
-      second: "/base/second/"
-    })
+    ).toEqual(
+      expect.objectContaining({
+        first: "/base/first/",
+        second: "/base/second/"
+      })
+    )
   })
 
   it("should work with nested prefixes", function() {
@@ -34,13 +36,15 @@ describe("include", function() {
           fourth: "fourth/"
         })
       })
-    ).toEqual({
-      first: "/base/first/",
-      second: {
-        third: "/base/second/third/",
-        fourth: "/base/second/fourth/"
-      }
-    })
+    ).toEqual(
+      expect.objectContaining({
+        first: "/base/first/",
+        second: expect.objectContaining({
+          third: "/base/second/third/",
+          fourth: "/base/second/fourth/"
+        })
+      })
+    )
   })
 
   it("should add missing slash to base", function() {
@@ -49,10 +53,12 @@ describe("include", function() {
         first: "first/",
         second: "second/"
       })
-    ).toEqual({
-      first: "/base/first/",
-      second: "/base/second/"
-    })
+    ).toEqual(
+      expect.objectContaining({
+        first: "/base/first/",
+        second: "/base/second/"
+      })
+    )
   })
 
   it("shouldn't prefix base to absolute urls", function() {
@@ -61,9 +67,23 @@ describe("include", function() {
         relative: "rel/",
         absolute: "/abs/"
       })
-    ).toEqual({
-      relative: "/base/rel/",
-      absolute: "/abs/"
+    ).toEqual(
+      expect.objectContaining({
+        relative: "/base/rel/",
+        absolute: "/abs/"
+      })
+    )
+  })
+
+  it(".toString should return full base path", function() {
+    const routes = include("/base/", {
+      first: "first/",
+      second: include("second", {
+        third: "third/",
+        fourth: "fourth/"
+      })
     })
+
+    expect(routes.second.toString()).toEqual("/base/second")
   })
 })
