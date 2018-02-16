@@ -1,3 +1,5 @@
+const checkEnv = process.env.NODE_ENV === "development"
+
 export function include(base, routes) {
   const mappedRoutes = {
     toString() {
@@ -25,14 +27,34 @@ export function include(base, routes) {
   return mappedRoutes
 }
 
-export function reverse(pattern, params = {}) {
-  return Object.keys(params).reduce((url, key) => {
-    const newUrl = url.split(`:${key}`).join(params[key])
-    if (process.env.NODE_ENV === "development") {
-      if (url === newUrl)
-        // eslint-disable-next-line no-console
+const checkKeys = (pattern, params) => {
+  if (checkEnv) {
+    Object.keys(params).forEach( key => {
+      if (pattern.indexOf(`:${key}`) < 0) {
         console.warn(`Unknown parameter :${key} in pattern ${pattern}`)
-    }
-    return newUrl
-  }, pattern)
+      }
+    })
+  }
+}
+
+export function reverse(pattern, params = {}) {
+  checkKeys(pattern, params)
+  return (pattern.match(/:\w+\??/g) || []).reduce((url, key) => {
+        const optKey = key.replace(':', '').replace('?', '')
+        if (params[optKey] === undefined && key.indexOf('?') < 0) {
+          if (process.env.NODE_ENV === "development") {
+            console.warn(`Required parameter ${key} is missing for ${pattern}`)
+          }
+          return url
+        } else {
+          return url.split(key).join(params[optKey] || '')
+        }
+    }, pattern).replace(/\/\//, '/')
+}
+
+export function reverseForce(pattern, params = {}) {
+  return (pattern.match(/:\w+\??/g) || []).reduce((url, key) => {
+        const optKey = key.replace(':', '').replace('?', '')
+        return url.split(key).join(params[optKey] || '')
+    }, pattern).replace(/\/\//, '/')
 }

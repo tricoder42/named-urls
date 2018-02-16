@@ -1,4 +1,4 @@
-import { include, reverse } from "."
+import { include, reverse, reverseForce } from "."
 
 describe("reverse", function() {
   it("should return original pattern when called without params", function() {
@@ -9,6 +9,13 @@ describe("reverse", function() {
   it("should replace params", function() {
     expect(reverse("pattern/:param", { param: 42 })).toEqual("pattern/42")
     expect(reverse("a/:param/b/:param", { param: 42 })).toEqual("a/42/b/42")
+  })
+
+  it("should replace optional params", function() {
+    expect(reverse("pattern/:param?", { param: 42 })).toEqual("pattern/42")
+    expect(reverse("pattern/:param?")).toEqual("pattern/")
+    expect(reverse("a/:param?/b/:param", { param: 42 })).toEqual("a/42/b/42")
+    expect(reverse("a/:param?/b")).toEqual("a/b")
   })
 })
 
@@ -85,5 +92,23 @@ describe("include", function() {
     })
 
     expect(routes.second.toString()).toEqual("/base/second")
+  })
+})
+
+describe("reverseForce", function() {
+  it("should replace params with an empty string if not present", function() {
+    expect(reverseForce("pattern")).toEqual("pattern")
+    expect(reverseForce("pattern/:param")).toEqual("pattern/")
+    expect(reverseForce("pattern/:param/other")).toEqual("pattern/other")
+  })
+
+  it("should replace params", function() {
+    expect(reverseForce("pattern/:param", { param: 42 })).toEqual("pattern/42")
+    expect(reverseForce("a/:param/b/:param", { param: 42 })).toEqual("a/42/b/42")
+  })
+
+  it("should replace optional params", function() {
+    expect(reverseForce("pattern/:param?", { param: 42 })).toEqual("pattern/42")
+    expect(reverseForce("a/:param?/b/:param", { param: 42 })).toEqual("a/42/b/42")
   })
 })
