@@ -57,7 +57,7 @@ export default {
    article: '/article/:articleId',
    
    // route with optional params
-   messages: '/messages/:messageId',
+   messages: '/messages/:messageId?',
    
    // Routes with common path prefix
    auth: include('/auth', {
@@ -142,12 +142,12 @@ slash:
 
 ```js
 // pattern with ending slash
-reverse('pattern/?optional', { optional: 42 }) // pattern/42
-reverse('pattern/?optional') // pattern
+reverse('pattern/:optional?', { optional: 42 }) // pattern/42
+reverse('pattern/:optional?') // pattern
 
 // pattern without ending slash
-reverse('pattern/?optional/', { optional: 42 }) // pattern/42/
-reverse('pattern/?optional/') // pattern/
+reverse('pattern/:optional?/', { optional: 42 }) // pattern/42/
+reverse('pattern/:optional?/') // pattern/
 ```
 
 
