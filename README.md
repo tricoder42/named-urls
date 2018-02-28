@@ -53,6 +53,12 @@ export default {
    // simple route
    profile: '/profile',
    
+   // route with params
+   article: '/article/:articleId',
+   
+   // route with optional params
+   messages: '/messages/:messageId',
+   
    // Routes with common path prefix
    auth: include('/auth', {
       // Absolute url (ignore /auth prefix)
@@ -127,6 +133,23 @@ function Navigation({ messages }) {
    )
 }
 ```
+
+## Ending slash
+
+Patterns ending with slash are always reversed to URL with ending slash and vice
+versa: Paterns without ending slash are always reserved to URL without endlish
+slash:
+
+```js
+// pattern with ending slash
+reverse('pattern/?optional', { optional: 42 }) // pattern/42
+reverse('pattern/?optional') // pattern
+
+// pattern without ending slash
+reverse('pattern/?optional/', { optional: 42 }) // pattern/42/
+reverse('pattern/?optional/') // pattern/
+```
+
 
 ## License
 
