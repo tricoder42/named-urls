@@ -23,7 +23,6 @@
     "babel-core": "^6.26.3",
     "babel-preset-env": "^1.7.0",
     "codecov": "^3.0.4",
-    "condition-circle": "^2.0.1",
     "jest": "^23.5.0",
     "jest-junit": "^5.1.0",
     "rollup": "^0.64.1",
@@ -43,14 +42,16 @@
       "html",
       "lcov"
     ],
-    "reporters": ["default", "jest-junit"],
+    "reporters": [
+      "default",
+      "jest-junit"
+    ],
     "transformIgnorePatterns": [
       "/node_modules/",
       "/dist/"
     ]
   },
   "release": {
-    "branch": "master",
-    "verifyConditions": "condition-circle"
+    "branch": "master"
   }
 }
