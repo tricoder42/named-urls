@@ -52,6 +52,7 @@
     ]
   },
   "release": {
-    "branch": "master"
+    "branch": "master",
+    "npmPublish": false
   }
 }
