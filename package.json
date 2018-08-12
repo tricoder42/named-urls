@@ -43,7 +43,7 @@
       "html",
       "lcov"
     ],
-    "testResultsProcessor": "jest-junit",
+    "reporters": ["default", "jest-junit"],
     "transformIgnorePatterns": [
       "/node_modules/",
       "/dist/"
