@@ -12,6 +12,13 @@
     "prepublish": "rollup -c rollup.config.js",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
+  "files": [
+    "package.json",
+    "LICENCE",
+    "README.md",
+    "dist/*",
+    "src/*"
+  ],
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-preset-env": "^1.7.0",
