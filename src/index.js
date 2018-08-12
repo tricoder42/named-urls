@@ -51,31 +51,31 @@ function preserveEndingSlash(pattern, reversed) {
 }
 
 export function reverse(pattern, params = {}) {
-  if (checkEnv) {
-    checkKeys(pattern, params)
-  }
-  const reversed = (pattern.match(/:\w+\??/g) || [])
-    .reduce((url, key) => {
-      const optKey = key.replace(":", "").replace("?", "")
-      if (params[optKey] === undefined && key.indexOf("?") < 0) {
-        if (process.env.NODE_ENV === "development") {
-          console.warn(`Required parameter ${key} is missing for ${pattern}`)
+    if (checkEnv) {
+        checkKeys(pattern, params)
+    }
+    const reversed = pattern.replace(/\w*(:\w+\??)/g, function(path, param) {
+        const key = param.replace(/[:?]/g,'')
+        if (params[key] === undefined) {
+            if (param.indexOf('?') < 0) {
+                if (checkEnv) {
+                    console.warn(`Required parameter ${key} is missing for ${pattern}`)
+                }
+                return path
+            } else {
+                return ''
+            }
+        } else {
+            return path.replace(param, params[key])
         }
-        return url
-      } else {
-        return url.split(key).join(params[optKey] || "")
-      }
-    }, pattern)
-    .replace(/\/\//, "/")
-  return preserveEndingSlash(pattern, reversed)
+    }).replace(/\/\//, "/")
+    return preserveEndingSlash(pattern, reversed)
 }
 
 export function reverseForce(pattern, params = {}) {
-  const reversed = (pattern.match(/:\w+\??/g) || [])
-    .reduce((url, key) => {
-      const optKey = key.replace(":", "").replace("?", "")
-      return url.split(key).join(params[optKey] || "")
-    }, pattern)
-    .replace(/\/\//g, "/")
+  const reversed = pattern.replace(/\w*(:\w+\??)/g, function(path, param) {
+    const key = param.replace(/[:?]/g,'')
+    return params[key] ? path.replace(param, params[key]) : ''
+  }).replace(/\/\//g, "/")
   return preserveEndingSlash(pattern, reversed)
 }

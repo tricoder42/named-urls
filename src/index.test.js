@@ -18,6 +18,8 @@ describe("reverse", function() {
     expect(reverse("pattern/:param?/")).toEqual("pattern/")
     expect(reverse("a/:param?/b/:param", { param: 42 })).toEqual("a/42/b/42")
     expect(reverse("a/:param?/b")).toEqual("a/b")
+    expect(reverse('pattern/page:param?', {})).toEqual('pattern')
+      expect(reverse('pattern/page:param?/', {})).toEqual('pattern/')
   })
 })
 
@@ -120,5 +122,6 @@ describe("reverseForce", function() {
     expect(reverseForce("a/:param?/b/:param", { param: 42 })).toEqual(
       "a/42/b/42"
     )
+    expect(reverseForce('pattern/page:param', {})).toEqual('pattern')
   })
 })
