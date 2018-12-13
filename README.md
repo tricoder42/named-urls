@@ -114,7 +114,7 @@ Routes with parameters can be formatted using `reverse` function:
 // Navigation.js
 import * as React from 'react'
 import { Link } from 'react-router'
-import { reverse } form 'named-urls'
+import { reverse } from 'named-urls'
 
 function Navigation({ messages }) {
    return (
