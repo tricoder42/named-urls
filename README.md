@@ -72,7 +72,7 @@ export default {
    // Routes with params
    messages: include('/messages', {
       all: '',
-      unread: 'unread/'
+      unread: 'unread/',
       
       // nesting of includes is allowed
       detail: include(':messageId/', {
