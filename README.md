@@ -1,7 +1,7 @@
 <div align="center">
 <h1>named-urls</h1>
 
-Simple named url patterns in Javascript
+Simple named url patterns in JavaScript.
 </div>
 
 <hr />
@@ -37,7 +37,14 @@ There're other libs dealing with named routes, some of them provide custom
 ## Installation
 
 ```
-yarn add named-urls
+$ npm install named-urls
+```
+
+or
+
+
+```
+$ yarn add named-urls
 ```
 
 ## Quickstart
@@ -52,28 +59,28 @@ import { include } from 'named-urls'
 export default {
    // simple route
    profile: '/profile',
-   
+
    // route with params
    article: '/article/:articleId',
-   
+
    // route with optional params
    messages: '/messages/:messageId?',
-   
+
    // Routes with common path prefix
    auth: include('/auth', {
       // Absolute url (ignore /auth prefix)
       login: '/login/',
-      
+
       // Relative urls (prefixed with /auth)
       passwordReset: 'password/reset/',
       passwordVerify: 'password/verify/',
    }),
-   
+
    // Routes with params
    messages: include('/messages', {
       all: '',
-      unread: 'unread/'
-      
+      unread: 'unread/',
+
       // nesting of includes is allowed
       detail: include(':messageId/', {
          show: '',
@@ -89,20 +96,20 @@ Use routes in `Route` component from `react-router-dom`:
 ```jsx
 // App.js
 
-import * as React from 'react'
+import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 
 import routes from './routes'
-import * as scenes from './scenes'
+import * as scenes from './scenes' // just a convention, could be "pages"
 
 function App() {
    return (
       <Switch>
-         <Route path={routes.profile} component={scenes.Profile />
-         <Route path={routes.auth.login} component={scenes.auth.Login />
+         <Route path={routes.profile} component={scenes.Profile} />
+         <Route path={routes.auth.login} component={scenes.auth.Login} />
          // ...
-         <Route path={routes.messages.unread} component={scenes.messages.Unread />
-         <Route path={routes.messages.detail.show} component={scenes.messages.Detail />
+         <Route path={routes.messages.unread} component={scenes.messages.Unread} />
+         <Route path={routes.messages.detail.show} component={scenes.messages.Detail} />
       </Switch>
    )
 }
@@ -112,19 +119,19 @@ Routes with parameters can be formatted using `reverse` function:
 
 ```jsx
 // Navigation.js
-import * as React from 'react'
+import React from 'react'
 import { Link } from 'react-router'
 import { reverse } from 'named-urls'
 
 function Navigation({ messages }) {
    return (
       <ul>
-         <li><Link to={routes.profile}>Profile</Link></li>
+         <li><Link to={`${routes.profile}`}>Profile</Link></li>
          // ...
          // Use reverse to replace params in route pattern with values
          {messages.map(message => 
             <li key={message.id}>
-               <Link to={reverse(routes.messages.detail.show, { messageId: message.id })}>
+               <Link to={reverse(`${routes.messages.detail.show}`, { messageId: message.id })}>
                   Profile
                </Link>
             </li>
@@ -150,6 +157,60 @@ reverse('pattern/:optional?/', { optional: 42 }) // pattern/42/
 reverse('pattern/:optional?/') // pattern/
 ```
 
+## Some tricks
+
+### Using an "include" route
+
+If you define a route as an include, calling it directly will return you a function. To by-pass that, you have a solution to create an empty route inside, let's call it `self`:
+
+```jsx
+// routes.js
+import { include } from 'named-urls'
+
+export default {
+   messages: include('/messages', {
+      self: '',
+
+      detail: include(':messageId/', {
+         show: '',
+         edit: 'edit/',
+         comments: 'comments/',
+      })
+   })
+}
+```
+
+so you'll be able to do:
+
+```jsx
+<Route path={routes.messages.self} component={Messages} />
+```
+
+A way to not define a useless route is to use the string way of a route like that:
+
+```jsx
+// routes.js
+import { include } from 'named-urls'
+
+export default {
+   messages: include('/messages', {
+      detail: include(':messageId/', {
+         edit: 'edit/',
+         comments: 'comments/',
+      })
+   })
+}
+```
+
+
+
+```jsx
+<Route path={`${routes.messages}`} component={Messages} />
+
+// OR
+
+<Route path={String(routes.messages)} component={Messages} />
+```
 
 ## License
 
