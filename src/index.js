@@ -27,14 +27,6 @@ export function include(base, routes) {
   return mappedRoutes
 }
 
-const checkKeys = (pattern, params) => {
-  Object.keys(params).forEach(key => {
-    if (pattern.indexOf(`:${key}`) < 0) {
-      console.warn(`Unknown parameter :${key} in pattern ${pattern}`)
-    }
-  })
-}
-
 function preserveEndingSlash(pattern, reversed) {
   const endingSlashRe = /\/$/
 
@@ -51,16 +43,10 @@ function preserveEndingSlash(pattern, reversed) {
 }
 
 export function reverse(pattern, params = {}) {
-    if (checkEnv) {
-        checkKeys(pattern, params)
-    }
     const reversed = pattern.replace(/\w*(:\w+\??)/g, function(path, param) {
         const key = param.replace(/[:?]/g,'')
         if (params[key] === undefined) {
             if (param.indexOf('?') < 0) {
-                if (checkEnv) {
-                    console.warn(`Required parameter ${key} is missing for ${pattern}`)
-                }
                 return path
             } else {
                 return ''
