@@ -54,5 +54,8 @@
   "release": {
     "branch": "master",
     "npmPublish": false
+  },
+  "dependencies": {
+    "path-to-regexp": "^6.1.0"
   }
 }
