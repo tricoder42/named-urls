@@ -1,3 +1,5 @@
+import { compile, parse } from "path-to-regexp"
+
 const checkEnv = process.env.NODE_ENV === "development"
 
 export function include(base, routes) {
@@ -27,41 +29,26 @@ export function include(base, routes) {
   return mappedRoutes
 }
 
-function preserveEndingSlash(pattern, reversed) {
-  const endingSlashRe = /\/$/
+function compileWithParams(pattern, params = {}) {
+  const reversed = compile(pattern)
 
-  const shouldHave = endingSlashRe.test(pattern)
-  const has = endingSlashRe.test(reversed)
-
-  if (shouldHave && !has) {
-    return reversed + "/"
-  } else if (!shouldHave && has) {
-    return reversed.slice(0, reversed.length - 1)
-  }
-
-  return reversed
+  return reversed(params)
 }
 
 export function reverse(pattern, params = {}) {
-    const reversed = pattern.replace(/\w*(:\w+\??)/g, function(path, param) {
-        const key = param.replace(/[:?]/g,'')
-        if (params[key] === undefined) {
-            if (param.indexOf('?') < 0) {
-                return path
-            } else {
-                return ''
-            }
-        } else {
-            return path.replace(param, params[key])
-        }
-    }).replace(/\/\//, "/")
-    return preserveEndingSlash(pattern, reversed)
+  try {
+    return compileWithParams(pattern, params)
+  } catch (err) {
+    return pattern
+  }
 }
 
 export function reverseForce(pattern, params = {}) {
-  const reversed = pattern.replace(/\w*(:\w+\??)/g, function(path, param) {
-    const key = param.replace(/[:?]/g,'')
-    return params[key] ? path.replace(param, params[key]) : ''
-  }).replace(/\/\//g, "/")
-  return preserveEndingSlash(pattern, reversed)
+  try {
+    return compileWithParams(pattern, params)
+  } catch (err) {
+    const tokens = parse(pattern)
+
+    return tokens.filter(token => typeof token === "string").join("")
+  }
 }
