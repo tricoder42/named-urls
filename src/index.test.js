@@ -1,17 +1,17 @@
 import { include, reverse, reverseForce } from "."
 
-describe("reverse", function () {
-  it("should return original pattern when called without params", function () {
+describe("reverse", function() {
+  it("should return original pattern when called without params", function() {
     expect(reverse("pattern")).toEqual("pattern")
     expect(reverse("pattern/:param")).toEqual("pattern/:param")
   })
 
-  it("should replace params", function () {
+  it("should replace params", function() {
     expect(reverse("pattern/:param", { param: 42 })).toEqual("pattern/42")
     expect(reverse("a/:param/b/:param", { param: 42 })).toEqual("a/42/b/42")
   })
 
-  it("should replace optional params", function () {
+  it("should replace optional params", function() {
     expect(reverse("pattern/:param?", { param: 42 })).toEqual("pattern/42")
     expect(reverse("pattern/:param?/", { param: 42 })).toEqual("pattern/42/")
     expect(reverse("pattern/:param?")).toEqual("pattern")
@@ -22,7 +22,7 @@ describe("reverse", function () {
     expect(reverse('pattern/(page:param)?/', {})).toEqual('pattern/')
   })
 
-  it("should escape validation patterns", function () {
+  it("should escape validation patterns", function() {
     expect(reverse("pattern/:param(\\d+)", { param: 42 })).toEqual("pattern/42")
   })
 })
