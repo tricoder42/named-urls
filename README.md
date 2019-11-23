@@ -34,6 +34,8 @@ There're other libs dealing with named routes, some of them provide custom
 - https://github.com/taion/use-named-routes
 - https://github.com/alubbe/named-routes
 
+> **NOTE:** v2 introduces breaking changes. Please check out the [migration guide](#migrating-from-v1xx-to-v2xx) before upgrading.
+
 ## Installation
 
 ```
@@ -129,7 +131,7 @@ function Navigation({ messages }) {
          <li><Link to={`${routes.profile}`}>Profile</Link></li>
          // ...
          // Use reverse to replace params in route pattern with values
-         {messages.map(message => 
+         {messages.map(message =>
             <li key={message.id}>
                <Link to={reverse(`${routes.messages.detail.show}`, { messageId: message.id })}>
                   Profile
@@ -156,6 +158,26 @@ reverse('pattern/:optional?') // pattern
 reverse('pattern/:optional?/', { optional: 42 }) // pattern/42/
 reverse('pattern/:optional?/') // pattern/
 ```
+
+## Migrating from v1.x.x to v2.x.x
+
+For better compatibility with React Router, v2 uses [path-to-regexp](https://github.com/pillarjs/path-to-regexp) to resolve URLs. This means some of your routes may break when you upgrade.
+
+### `reverse`
+
+```diff
+-reverse('pattern/page:param?', {})
++reverse('pattern/(page:param)?', {})
+```
+
+### `reverseForce`
+
+```diff
+-reverseForce('pattern/page:param?', {})
++reverseForce('pattern/(page:param)?', {})
+```
+
+To get a full overview of all accepted patterns, consult the [path-to-regexp](https://github.com/pillarjs/path-to-regexp) documentation.
 
 ## Some tricks
 
