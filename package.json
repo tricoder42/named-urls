@@ -9,8 +9,7 @@
   "scripts": {
     "test": "jest",
     "watch": "jest --watch",
-    "prepublish": "rollup -c rollup.config.js",
-    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
+    "prepublish": "rollup -c rollup.config.js"
   },
   "files": [
     "package.json",
