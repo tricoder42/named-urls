@@ -29,7 +29,7 @@
     "codecov": "^3.6.1",
     "jest": "^24.9.0",
     "jest-junit": "^9.0.0",
-    "rollup": "^1.27.4",
+    "rollup": "^1.27.5",
     "rollup-plugin-babel": "^4.3.3",
     "semantic-release": "^15.13.31"
   },
