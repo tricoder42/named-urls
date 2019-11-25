@@ -10,6 +10,7 @@ export default {
     file: `dist/index.es.js`,
     format: 'es'
   }],
+  external: ["path-to-regexp"],
   plugins: [
     babel({
       exclude: 'node_modules/**',
