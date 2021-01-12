@@ -15,6 +15,9 @@ export default {
   ],
   external: ["path-to-regexp"],
   plugins: [
-    typescript(),
+    typescript({
+      declaration: false,
+      tsconfig: "./tsconfig.build.json"
+    }),
   ],
 }
