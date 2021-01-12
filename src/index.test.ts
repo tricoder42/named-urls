@@ -101,6 +101,22 @@ describe("include", function() {
 
     expect(routes.second.toString()).toEqual("/base/second")
   })
+
+  it("shouldn't accept routes with any other function other than .toString", function() {
+    expect(() => include("/base/", {
+      first: "first/",
+      second: () => "second"
+    })).toThrow(Error)
+    expect(() => include("/base/", {
+      first: "first/",
+      second: include("second", {
+        third: "third/",
+        fourth() {
+          return "fourth/"
+        }
+      })
+    })).toThrow('Only the "toString" function is allowed.')
+  })
 })
 
 describe("reverseForce", function() {
