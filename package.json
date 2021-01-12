@@ -9,7 +9,9 @@
   "scripts": {
     "test": "jest",
     "watch": "jest --watch",
-    "prepublish": "rollup -c rollup.config.js",
+    "build-types": "tsc --emitDeclarationOnly",
+    "check-types": "tsc --noEmit",
+    "prepublish": "npm run build-types && rollup -c rollup.config.js",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "files": [
@@ -61,5 +63,6 @@
   "release": {
     "branch": "master",
     "npmPublish": false
-  }
+  },
+  "types": "dist/index.d.ts"
 }
