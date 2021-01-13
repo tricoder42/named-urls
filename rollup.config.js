@@ -1,3 +1,4 @@
+import babel from '@rollup/plugin-babel'
 import typescript from "@rollup/plugin-typescript"
 
 // rollup.config.js
@@ -19,5 +20,13 @@ export default {
       declaration: false,
       tsconfig: "./tsconfig.build.json"
     }),
+    babel({
+      babelHelpers: "runtime",
+      exclude: ["node_modules/**"],
+      extensions: [".ts"],
+      plugins: [
+        ["@babel/plugin-transform-runtime"]
+      ]
+    })
   ],
 }
