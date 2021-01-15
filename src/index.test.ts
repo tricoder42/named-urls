@@ -101,6 +101,24 @@ describe("include", function() {
 
     expect(routes.second.toString()).toEqual("/base/second")
   })
+
+  it('should only accept routes with a string, object or the "toString" method as values', function() {
+    expect(() => include("/base/", {
+      first: "first/",
+      second: () => "second"
+    })).toThrow(TypeError)
+    expect(() => include("/base/", {
+      first: "first/",
+      second: include("second", {
+        third: "third/",
+        fourth() {
+          return "fourth/"
+        }
+      })
+    })).toThrow(
+      '"fourth" is not valid. A routes object can only contain a string, an object or the "toString" method as values.'
+    )
+  })
 })
 
 describe("reverseForce", function() {

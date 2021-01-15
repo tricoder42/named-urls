@@ -1,0 +1,8 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "rootDir": "./src",                       /* Specify the root directory of input files. Use to control the output directory structure with --outDir. */
+        "types": [],                              /* Type declaration files to be included in compilation. */
+    },
+    "include": ["src/index.ts"]
+}
