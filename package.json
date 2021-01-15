@@ -19,7 +19,8 @@
     "LICENCE",
     "README.md",
     "dist/*",
-    "src/*"
+    "src/*",
+    "types/*"
   ],
   "dependencies": {
     "path-to-regexp": "^6.1.0"
@@ -47,5 +48,5 @@
     "branch": "master",
     "npmPublish": false
   },
-  "types": "dist/index.d.ts"
+  "types": "types/index.d.ts"
 }

@@ -17,13 +17,13 @@
     "noUncheckedIndexedAccess": true,         /* Include 'undefined' in index signature results */
     "noUnusedLocals": true,                   /* Report errors on unused locals. */
     "noUnusedParameters": true,               /* Report errors on unused parameters. */
-    "outDir": "./dist",                       /* Redirect output structure to the directory. */
+    "outDir": "./types",                      /* Redirect output structure to the directory. */
     "skipLibCheck": true,                     /* Skip type checking of declaration files. */
     "strict": true,                           /* Enable all strict type-checking options. */
     "target": "ESNext",                       /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019', 'ES2020', or 'ESNEXT'. */
     "types": ["jest"],                        /* Type declaration files to be included in compilation. */
   },
-  "declarationDir": "dist/",
+  "declarationDir": "types/",
   "exclude": ["node_modules/**", "dist/**", "coverage/**", ".circleci/**"],
   "include": ["src/**/*", "jest.config.ts"],
 }
