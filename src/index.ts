@@ -46,8 +46,10 @@ export const include: Include = (base, routes) => {
       mappedRoutes[route] =
         url.indexOf("/") === 0 ? url : [base, url].join("/").replace("//", "/")
     } else {
-      // allow the toString function only
-      throw new Error('Only the "toString" function is allowed.')
+      // don't allow invalid routes object
+      throw new TypeError(
+        `"${route}" is not valid. A routes object can only contain a string, an object or the "toString" method as values.`
+      )
     }
   })
 

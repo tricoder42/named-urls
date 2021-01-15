@@ -102,11 +102,11 @@ describe("include", function() {
     expect(routes.second.toString()).toEqual("/base/second")
   })
 
-  it("shouldn't accept routes with any other function other than .toString", function() {
+  it('should only accept routes with a string, object or the "toString" method as values', function() {
     expect(() => include("/base/", {
       first: "first/",
       second: () => "second"
-    })).toThrow(Error)
+    })).toThrow(TypeError)
     expect(() => include("/base/", {
       first: "first/",
       second: include("second", {
@@ -115,7 +115,9 @@ describe("include", function() {
           return "fourth/"
         }
       })
-    })).toThrow('Only the "toString" function is allowed.')
+    })).toThrow(
+      '"fourth" is not valid. A routes object can only contain a string, an object or the "toString" method as values.'
+    )
   })
 })
 
